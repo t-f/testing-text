@@ -72,7 +72,7 @@ unsigned char* BMP_Decode(unsigned char* raw) {
 
 	tmp_image = malloc(DIB_header.image_size);
 	for (i = 0; i < h; i++)
-		memcpy(tmp_image + bytes * i * w, raw + 14 + DIB_header.header_size + bytes * (h - i) * w, bytes * w);
+		memcpy(tmp_image + bytes * i * w, raw + 14 + DIB_header.header_size + bytes * (h - 1 - i) * w, bytes * w);
 
 	return tmp_image;
 }
