@@ -23,23 +23,13 @@ unsigned char* BMP_Load(const char* fn) {
 		printf("No file\n");
 	fseek(fp, 0, SEEK_END);
 	size = ftell(fp);
-	printf("size: %d\n", size);
 	rewind(fp);
 
 	BMP_raw_buffer = malloc(size * sizeof(char));
 	fread(BMP_raw_buffer, 1, size, fp);
 
-	printf("first 20 bytes:\n");
-	for (i = 0; i < 20; i++)
-		printf("%02X ", *(BMP_raw_buffer + i) & 0xFF);
-	printf("\nlast 20 bytes:\n");
-	for (i = size - 20; i < size; i++)
-		printf("%02X ", *(BMP_raw_buffer + i) & 0xFF);
-	printf("\n");
-
 	image = BMP_Decode(BMP_raw_buffer);
 	free(BMP_raw_buffer);
-	//free(image);
 	fclose(fp);
 
 	return image;
@@ -70,9 +60,6 @@ unsigned char* BMP_Decode(unsigned char* raw) {
 
 	unsigned char* tmp_image;
 
-	//printf("size of 1st header: %d\n", (int)sizeof(Bitmap_file_header));
-	//printf("size of 2nd header: %d\n", (int)sizeof(DIB_header));
-
 	memcpy(&Bitmap_file_header.size, raw + 0x2, 4);
 	memcpy(&Bitmap_file_header.offset, raw + 0xA, 4);
 
@@ -83,10 +70,6 @@ unsigned char* BMP_Decode(unsigned char* raw) {
 	memcpy(&DIB_header.image_size, raw + 0x22, 4);
 
 
-	printf("header 1 size: %d, offset: %08X\n", Bitmap_file_header.size, Bitmap_file_header.offset);
-	printf("header 2 size: %d, width: %d, height: %d, bpp: %d, img_size: %d\n", DIB_header.header_size,
-	       DIB_header.width, DIB_header.height, DIB_header.bpp, DIB_header.image_size);
-
 	int h = DIB_header.height;
 	int w = DIB_header.width;
 	int bytes = DIB_header.bpp / 8;
@@ -94,18 +77,6 @@ unsigned char* BMP_Decode(unsigned char* raw) {
 	tmp_image = malloc(DIB_header.image_size);
 	for (i = 0; i < h; i++)
 		memcpy(tmp_image + bytes * i * w, raw + 14 + DIB_header.header_size + bytes * (h - i) * w, bytes * w);
-
-	// draws a diagonal line in the array data that changes the magenta with blue color
-	for (i = 0; i < h; i++)
-		*(tmp_image + 3 * i + h * 3 * i) = 0x00;
-
-	printf("first 20 bytes:\n");
-	for (i = 0; i < 20; i++)
-		printf("%02X ", *(tmp_image + i) & 0xFF);
-	printf("\nlast 20 bytes:\n");
-	for (i = DIB_header.image_size - 20; i < DIB_header.image_size; i++)
-		printf("%02X ", *(tmp_image + i) & 0xFF);
-	printf("\n");
 
 	return tmp_image;
 }
@@ -123,7 +94,6 @@ int main() {
 	window = SDL_CreateWindow("Title", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 320, 240, 0);
 	screen = SDL_GetWindowSurface(window);
 
-	//tmp_surface = SDL_LoadBMP(fontname);
 	uint32_t rmask, gmask, bmask, amask;
 	rmask = 0x000000ff;
 	gmask = 0x0000ff00;
