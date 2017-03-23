@@ -25,6 +25,30 @@ void matrix_mult4x4(float a[16], float b[16], float c[16]) {
 		c[i] = d[i];
 }
 
+char* file_read(const char* filename) {
+	SDL_RWops *input = SDL_RWFromFile(filename, "rb");
+	if (input == NULL) return NULL;
+
+	Sint64 res_size = SDL_RWsize(input);
+	char* content = (char*)malloc(res_size + 1);
+
+	Sint64 size = 0, nb_read = 1;
+	char* buf = content;
+	while (size < res_size && nb_read != 0) {
+		nb_read = SDL_RWread(input, buf, 1, (res_size - size));
+		size += nb_read;
+		buf += nb_read;
+	}
+	SDL_RWclose(input);
+	if (size != res_size) {
+		free(content);
+		return NULL;
+	}
+
+	content[size] = '\0';
+	return content;
+}
+
 
 int main() {
 	SDL_Window* window = NULL;
