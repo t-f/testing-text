@@ -1,4 +1,5 @@
 #include <SDL2/SDL.h>
+#include <SDL2/SDL_opengl.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdint.h>
@@ -10,9 +11,24 @@ unsigned char* BMP_Decode(unsigned char* raw);
 
 int i, j;
 
+void matrix_mult4x4(float a[16], float b[16], float c[16]) {
+	int i;
+	float d[16];
+	//float c[16];
+	for (i = 0; i < 16; i++) {
+		d[i] =   a[0 + i % 4] * b[0 + 4 * (int)(i / 4)]
+		         + a[4 + i % 4] * b[1 + 4 * (int)(i / 4)]
+		         + a[8 + i % 4] * b[2 + 4 * (int)(i / 4)]
+		         + a[12 + i % 4] * b[3 + 4 * (int)(i / 4)];
+	}
+	for (i = 0; i < 16; i++)
+		c[i] = d[i];
+}
+
 
 int main() {
 	SDL_Window* window = NULL;
+	//SDL_GLContext context;
 	SDL_Surface* screen;
 	SDL_Surface* text_surface;
 	SDL_Surface* tmp_surface;
@@ -21,7 +37,17 @@ int main() {
 	int quit = 0;
 
 	SDL_Init(SDL_INIT_VIDEO);
-	window = SDL_CreateWindow("Title", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 320, 240, 0);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, 3);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE);
+
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, 24);
+
+	SDL_GL_SetSwapInterval(1);
+
+	window = SDL_CreateWindow("Title", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 320, 240, SDL_WINDOW_OPENGL);
+	//context = SDL_GL_CreateContext(window);
 	screen = SDL_GetWindowSurface(window);
 
 	uint32_t rmask, gmask, bmask, amask;
@@ -47,6 +73,7 @@ int main() {
 			}
 		}
 	}
+	//SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;
