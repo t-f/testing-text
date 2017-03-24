@@ -52,7 +52,7 @@ char* file_read(const char* filename) {
 
 int main() {
 	SDL_Window* window = NULL;
-	//SDL_GLContext context;
+	SDL_GLContext context;
 	SDL_Surface* screen;
 	SDL_Surface* text_surface;
 	SDL_Surface* tmp_surface;
@@ -71,8 +71,25 @@ int main() {
 	SDL_GL_SetSwapInterval(1);
 
 	window = SDL_CreateWindow("Title", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 320, 240, SDL_WINDOW_OPENGL);
-	//context = SDL_GL_CreateContext(window);
+	context = SDL_GL_CreateContext(window);
 	screen = SDL_GetWindowSurface(window);
+
+	const char* vertex_shader_string   = file_read("./shaders/01.vert");
+	const char* fragment_shader_string = file_read("./shaders/01.frag");
+	if (vertex_shader_string == NULL || fragment_shader_string == 0 ) {
+		SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_INFORMATION, "error", "The shader could not be loaded", NULL);
+		SDL_GL_DeleteContext(context);
+		SDL_DestroyWindow(window);
+		SDL_Quit();
+		return 0;
+	}
+
+	//GLuint shader_01V = glCreateShader(GL_VERTEX_SHADER);
+	//GLuint shader_01F = glCreateShader(GL_FRAGMENT_SHADER);
+	//GLuint program_01 = glCreateProgram();
+
+	//glShaderSource(shader_01V, 1, &vertex_shader_string, NULL);
+	//glShaderSource(shader_01F, 1, &fragment_shader_string, NULL);
 
 	uint32_t rmask, gmask, bmask, amask;
 	rmask = 0x000000ff;
@@ -97,7 +114,7 @@ int main() {
 			}
 		}
 	}
-	//SDL_GL_DeleteContext(context);
+	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
 	return 0;
