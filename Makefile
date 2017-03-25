@@ -11,12 +11,12 @@
 # --------- Variables ---------
 TARGET := program
 PLATFORM :=
-OBJS := main.o bmp.o
+OBJS := extensions.o main.o bmp.o
 DEBUG :=
 CFLAGS := -c $(DEBUG) -Wall
 LFLAGS_WIN := -lSDL2 -mwindows
 LFLAGS_LNX := -lSDL2 -lm
-INCLUDE :=
+INCLUDE := include
 OBJDIR := obj
 SRCDIR := src
 # --- Options ---
@@ -41,10 +41,11 @@ $(TARGET).out: $(addprefix $(OBJDIR)/,$(OBJS))
 	gcc $^ $(PLATFORM) $(LFLAGS_LNX) -o $@
 	@echo Linked
 
+$(addprefix $(OBJDIR)/,extensions.o main.o): $(INCLUDE)/extensions.h
 
 $(OBJDIR)/%.o : %.c
-	gcc $(CFLAGS) $< $(PLATFORM) -o $@
+	gcc -I$(INCLUDE) $(CFLAGS) $< $(PLATFORM) -o $@
 
 
 clean:
-	rm -f $(OBJDIR)/*.o $(TARGET).out $(TARGET).exe
+	del /F $(OBJDIR)\*.o $(TARGET).out $(TARGET).exe

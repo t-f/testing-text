@@ -1,0 +1,34 @@
+//void   (APIENTRY* glGenBuffers)(GLsizei n, GLuint* buffers);
+//void   (APIENTRY* glBindBuffer)(GLenum target, GLuint buffer);
+//void   (APIENTRY* glBufferData)(GLenum target, GLsizeiptr size, const GLvoid* data, GLenum usage);
+//void   (APIENTRY* glBufferSubData) (GLenum target, GLintptr offset, GLsizeiptr size, const GLvoid* data);
+//void   (APIENTRY* glDeleteBuffers)(GLsizei n, const GLuint* buffers);
+
+GLuint (APIENTRY* glCreateShader) (GLenum);
+void   (APIENTRY* glShaderSource) (GLuint, GLsizei, const GLchar**, const GLint*);
+void   (APIENTRY* glCompileShader) (GLuint);
+GLuint (APIENTRY* glCreateProgram) (void);
+void   (APIENTRY* glAttachShader) (GLuint, GLuint);
+void   (APIENTRY* glDetachShader) (GLuint, GLuint);
+void   (APIENTRY* glLinkProgram) (GLuint);
+//void   (APIENTRY* glUseProgram) (GLuint);
+//void   (APIENTRY* glEnableVertexAttribArray) (GLuint);
+//void   (APIENTRY* glDisableVertexAttribArray) (GLuint);
+//void   (APIENTRY* glVertexAttribPointer) (GLuint, GLint, GLenum, GLboolean, GLsizei, const GLvoid*);
+//void   (APIENTRY* glBindVertexArray) (GLuint array);
+//void   (APIENTRY* glGenVertexArrays) (GLsizei n, GLuint* arrays);
+//GLint  (APIENTRY* glGetUniformLocation) (GLuint program, const GLchar* name);
+//void   (APIENTRY* glUniform1f) (GLint location, GLfloat v0);
+//void   (APIENTRY* glUniform2f) (GLint location, GLfloat v0, GLfloat v1);
+//void   (APIENTRY* glUniformMatrix4fv) (GLint location, GLsizei count, GLboolean transpose, const GLfloat* value);
+//void   (APIENTRY* glDrawElementsBaseVertex) (GLenum mode, GLsizei count, GLenum type, const void *indices, GLint basevertex);
+//void   (APIENTRY* glUniform3f) (GLint location, GLfloat v0, GLfloat v1, GLfloat v2);
+void   (APIENTRY* glGetShaderiv) (GLuint shader, GLenum pname, GLint* params);
+void   (APIENTRY* glGetProgramiv) (GLuint program, GLenum pname, GLint* params);
+
+void   (APIENTRY* glGetShaderInfoLog) (GLuint, GLsizei, GLsizei*, GLchar*);
+void   (APIENTRY* glDeleteShader) (GLuint);
+//GLuint (APIENTRY* glGetUniformBlockIndex) (GLuint program, const GLchar* uniformBlockName);
+//void   (APIENTRY* glUniformBlockBinding) (GLuint program, GLuint uniformBlockIndex, GLuint uniformBlockBinding);
+//void   (APIENTRY* glBindBufferRange) (GLenum target, GLuint index, GLuint buffer, GLintptr offset, GLsizeiptr size);
+//void   (APIENTRY* glBindBufferBase) (GLenum target, GLuint index, GLuint buffer);
