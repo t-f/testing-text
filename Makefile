@@ -11,7 +11,7 @@
 # --------- Variables ---------
 TARGET := program
 PLATFORM :=
-OBJS := extensions.o main.o bmp.o
+OBJS := extensions.o shaders.o main.o bmp.o
 DEBUG :=
 CFLAGS := -c $(DEBUG) -Wall
 LFLAGS_WIN := -lSDL2 -mwindows
@@ -41,7 +41,7 @@ $(TARGET).out: $(addprefix $(OBJDIR)/,$(OBJS))
 	gcc $^ $(PLATFORM) $(LFLAGS_LNX) -o $@
 	@echo Linked
 
-$(addprefix $(OBJDIR)/,extensions.o main.o): $(INCLUDE)/extensions.h
+$(addprefix $(OBJDIR)/,extensions.o shaders.o main.o): $(INCLUDE)/extensions.h
 
 $(OBJDIR)/%.o : %.c
 	gcc -I$(INCLUDE) $(CFLAGS) $< $(PLATFORM) -o $@
