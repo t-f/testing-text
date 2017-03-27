@@ -12,9 +12,6 @@ unsigned char* BMP_Decode(unsigned char* raw);
 void init_extensions();
 int init_shaders(SDL_Window* window, SDL_GLContext context);
 
-SDL_Window* window = NULL;
-SDL_GLContext context;
-
 int i, j;
 
 void matrix_mult4x4(float a[16], float b[16], float c[16]) {
@@ -57,6 +54,8 @@ char* file_read(const char* filename) {
 
 
 int main() {
+	SDL_Window* window = NULL;
+	SDL_GLContext context;
 	SDL_Surface* screen;
 	SDL_Surface* text_surface;
 	SDL_Surface* tmp_surface;
