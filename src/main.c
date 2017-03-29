@@ -13,6 +13,7 @@ void init_extensions();
 int init_shaders(SDL_Window* window, SDL_GLContext context);
 
 int i, j;
+GLuint program_01;
 
 void matrix_mult4x4(float a[16], float b[16], float c[16]) {
 	int i;
@@ -56,11 +57,11 @@ char* file_read(const char* filename) {
 int main() {
 	SDL_Window* window = NULL;
 	SDL_GLContext context;
-	SDL_Surface* screen;
-	SDL_Surface* text_surface;
-	SDL_Surface* tmp_surface;
+	//SDL_Surface* screen;
+	//SDL_Surface* text_surface;
+	//SDL_Surface* tmp_surface;
 	SDL_Event e;
-	char* fontname = "./res/10x10C.bmp";
+	//char* fontname = "./res/10x10C.bmp";
 	int quit = 0;
 
 	SDL_Init(SDL_INIT_VIDEO);
@@ -76,27 +77,30 @@ int main() {
 	window = SDL_CreateWindow("Title", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 320, 240, SDL_WINDOW_OPENGL);
 	context = SDL_GL_CreateContext(window);
 	init_extensions();
-	screen = SDL_GetWindowSurface(window);
+	//screen = SDL_GetWindowSurface(window);
 
-	if(init_shaders(window, context) != 0) 	return 0;
+	if (init_shaders(window, context) != 0) 	return 0;
 	//init_shaders(window, context);
 
-	//glUseProgram(program_01);
-
+	/*
 	uint32_t rmask, gmask, bmask, amask;
 	rmask = 0x000000ff;
 	gmask = 0x0000ff00;
 	bmask = 0x00ff0000;
 	amask = 0xff000000;
+
 	unsigned char* tmp_image = BMP_Load(fontname);
 	tmp_surface = SDL_CreateRGBSurfaceFrom(tmp_image, 160, 160, 24, 3 * 160, rmask, gmask, bmask, amask);
 	free(tmp_image);
 	text_surface = SDL_ConvertSurfaceFormat(tmp_surface, SDL_PIXELFORMAT_RGBA8888, 0);
 	SDL_FreeSurface(tmp_surface);
+	*/
+
+	glUseProgram(program_01);
 
 	while (!quit) {
-		SDL_BlitSurface(text_surface, NULL, screen, NULL);
-		SDL_UpdateWindowSurface(window);
+		//SDL_BlitSurface(text_surface, NULL, screen, NULL);
+		//SDL_UpdateWindowSurface(window);
 		while (SDL_PollEvent(&e) != 0) {
 			if (e.type == SDL_QUIT)
 				quit = 1;
@@ -105,6 +109,7 @@ int main() {
 					quit = 1;
 			}
 		}
+		SDL_GL_SwapWindow(window);
 	}
 	SDL_GL_DeleteContext(context);
 	SDL_DestroyWindow(window);

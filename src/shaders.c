@@ -3,6 +3,7 @@
 #include "extensions.h"
 #include <stdio.h>
 
+extern GLuint program_01;
 char* file_read(const char* filename);
 
 
@@ -19,7 +20,7 @@ int init_shaders(SDL_Window* window, SDL_GLContext context) {
 
 	GLuint shader_01V = glCreateShader(GL_VERTEX_SHADER);
 	GLuint shader_01F = glCreateShader(GL_FRAGMENT_SHADER);
-	GLuint program_01 = glCreateProgram();
+	program_01 = glCreateProgram();
 
 	glShaderSource(shader_01V, 1, &vertex_shader_string, NULL);
 	glShaderSource(shader_01F, 1, &fragment_shader_string, NULL);

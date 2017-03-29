@@ -16,7 +16,7 @@ void init_extensions() {
 	glAttachShader  = SDL_GL_GetProcAddress("glAttachShader");
 	glDetachShader  = SDL_GL_GetProcAddress("glDetachShader");
 	glLinkProgram   = SDL_GL_GetProcAddress("glLinkProgram");
-	//glUseProgram    = SDL_GL_GetProcAddress("glUseProgram");
+	glUseProgram    = SDL_GL_GetProcAddress("glUseProgram");
 	//glEnableVertexAttribArray  = SDL_GL_GetProcAddress("glEnableVertexAttribArray");
 	//glDisableVertexAttribArray = SDL_GL_GetProcAddress("glDisableVertexAttribArray");
 	//glVertexAttribPointer      = SDL_GL_GetProcAddress("glVertexAttribPointer");

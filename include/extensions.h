@@ -11,7 +11,7 @@ GLuint (APIENTRY* glCreateProgram) (void);
 void   (APIENTRY* glAttachShader) (GLuint, GLuint);
 void   (APIENTRY* glDetachShader) (GLuint, GLuint);
 void   (APIENTRY* glLinkProgram) (GLuint);
-//void   (APIENTRY* glUseProgram) (GLuint);
+void   (APIENTRY* glUseProgram) (GLuint);
 //void   (APIENTRY* glEnableVertexAttribArray) (GLuint);
 //void   (APIENTRY* glDisableVertexAttribArray) (GLuint);
 //void   (APIENTRY* glVertexAttribPointer) (GLuint, GLint, GLenum, GLboolean, GLsizei, const GLvoid*);
